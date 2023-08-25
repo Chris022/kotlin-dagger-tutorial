@@ -41,7 +41,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("kotlin.dagger.tutorial.AppKt")
+    mainClass.set("chris022.dagger.tutorial.AppKt")
 }
 
 //This is requred so that gradle forwards the System.in to the program
