@@ -1,7 +1,7 @@
 # Kotlin Dagger Tutorial
 My attempt at creating a Dagger tutorial (for Kotlin).
 ## Intro
-The goal of this tutorial is to teach the absolute basics needed to create a simple application. More in depth examples and documentation can be found on the [Dagger Website](https://dagger.dev/dev-guide/).
+The goal of this tutorial is to teach the absolute basics needed to create a simple application. More in depth examples and documentation can be found on the [Dagger Website](https://dagger.dev/dev-guide/). This tutorial assumes a basic understanding of dependency injection and is meant more as a dictionary than a real tutorial.
 ## Installation
 For a more general installation guide check the [Dagger Readme](https://github.com/google/dagger). In this document I will be using Gradle as buildsystem.
 
@@ -35,3 +35,4 @@ When you now run the programm everything should compile and run just fine!
 ```bash
 gradle run
 ```
+
