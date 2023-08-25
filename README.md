@@ -35,4 +35,14 @@ When you now run the programm everything should compile and run just fine!
 ```bash
 gradle run
 ```
+## Overview
+This section descripes the different Components there are to a dagger application.
 
+### Factories
+A factory simply creates a new instance of an object. It takes care of supplying all required Dependencies to the created object.
+
+### Dependencies
+Objects that act as a dependencies and therefore can be supplied to other objects.
+
+### Modules
+Modules act as descriptions for Dagger and tell it how to create new dependencies. Modules are only needed if the type of the dependency is an interface. Lets for example say you want to inject an object of type "ILogger"(=Interface) unsing the implementation "ConsoleLogger". Then you simple create a Module describing this. Every factory needs to reference the modules it uses.
