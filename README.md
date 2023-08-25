@@ -55,7 +55,7 @@ Factories are implmented simply as interfaces with a single function with the re
 
 ```kotlin
 interface CoffeeShop{
-    fun coffee(): Coffee
+    fun brew(): Coffee
 }
 ```
 
@@ -76,7 +76,7 @@ In order to than user such a Factory simple use the .create() function to get an
 
 ```kotlin
 fun main() {
-    var coffeeShop = CoffeeShop.create();
+    var coffeeShop: CoffeeShop = DaggerCoffeeShop.create();
     var coffee = coffeeShop.brew();
     ...
     ...
@@ -115,7 +115,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ConsoleLogger @Inject constructor(){
+class ConsoleLogger @Inject constructor() : ILogger{
     ...
     ...
 }
@@ -131,7 +131,7 @@ import dagger.Module
 @Module
 abstract class DebugModule{
     @Binds
-    fun logger(logger: ConsoleLogger):ILogger
+    abstract fun logger(logger: ConsoleLogger):ILogger
 }
 ```
 
@@ -142,7 +142,7 @@ import dagger.Provides
 import dagger.Module
 
 @Module
-abstract class DebugModule{
+class DebugModule{
     @Provides
     fun logger():ILogger {
         return ILogger { println(it)}
