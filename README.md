@@ -121,6 +121,19 @@ class ConsoleLogger @Inject constructor() : ILogger{
 }
 ```
 
+Info if a @Component uses an Singleton Dependency it also needs to delcare the @Singleton annotation!
+
+```kotlin
+import javax.inject.Singleton
+import dagger.Component
+
+@Singletion
+@Component([DebugModule::class])
+interface CoffeeShop{
+    fun brew(): Coffee
+}
+```
+
 ### Modules
 A Module is simply an abstract class annotated with the @Module annotation. For every dependency it resolves it than has a abstract function accepting an instance of the Interface and returing the interface. This function needs to be annotated with the @Binds annotation
 
