@@ -68,7 +68,18 @@ import dagger.Component
 
 @Component([DebugModule::class])
 interface CoffeeShop{
-    fun coffee(): Coffee
+    fun brew(): Coffee
+}
+```
+
+In order to than user such a Factory simple use the .create() function to get an Instance of it.
+
+```kotlin
+fun main() {
+    var coffeeShop = CoffeeShop.create();
+    var coffee = coffeeShop.brew();
+    ...
+    ...
 }
 ```
 
