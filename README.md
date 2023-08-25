@@ -46,3 +46,95 @@ Objects that act as a dependencies and therefore can be supplied to other object
 
 ### Modules
 Modules act as descriptions for Dagger and tell it how to create new dependencies. Modules are only needed if the type of the dependency is an interface. Lets for example say you want to inject an object of type "ILogger"(=Interface) unsing the implementation "ConsoleLogger". Then you simple create a Module describing this. Every factory needs to reference the modules it uses.
+
+## Implementation
+This section deals with the implementation of the before described components.
+
+### Factories
+Factories are implmented simply as interfaces with a single function with the returntype of the object the factory creates.
+
+```kotlin
+interface CoffeeShop{
+    fun coffee(): Coffee
+}
+```
+
+Using the @Component annotation Dagger than automatically creates the implementation of the Factory.
+
+**Info**: If your Object has Interfaces as Dependencies you need to provide Modules to the @Component annotation telling Dagger how to construct an instance of that Interface!
+
+```kotlin
+import dagger.Component
+
+@Component([DebugModule::class])
+interface CoffeeShop{
+    fun coffee(): Coffee
+}
+```
+
+### Dependencies
+Whenever you want to create an object that should be created by Dagger you need to use the @Inject annotation. In our example the "Coffee" Object should be created by dagger (via the Factory).
+
+```kotlin
+import javax.inject.Inject
+
+class Coffee @Inject constructor(){
+    ...
+    ...
+    ...
+}
+```
+
+@Inject annotated objects can also accept other dependencies. These will automatically be created by dagger and injected when required.
+
+```kotlin
+import javax.inject.Inject
+
+class Coffee @Inject constructor(logger: ILogger){
+    private val _logger = logger
+    ...
+    ...
+}
+```
+
+When using @Inject without any additional annotations dagger will create a new instance of an object everytime it is required as an dependencie. This behaviour can be changed by using scopes. The most important scope is @Singleton. An object annotated with the @Singleton annotation will only be created once and the same instace will than be supplied everytime it is required.
+
+```kotlin
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class ConsoleLogger @Inject constructor(){
+    ...
+    ...
+}
+```
+
+### Modules
+A Module is simply an abstract class annotated with the @Module annotation. For every dependency it resolves it than has a abstract function accepting an instance of the Interface and returing the interface. This function needs to be annotated with the @Binds annotation
+
+```kotlin
+import dagger.Binds
+import dagger.Module
+
+@Module
+abstract class DebugModule{
+    @Binds
+    fun logger(logger: ConsoleLogger):ILogger
+}
+```
+
+For very simple objects it is also possbile to implement the instance of the interface right in the Module. (In this case the ILogger needs to be implmented as a Kotlin SAM interface)
+
+```kotlin
+import dagger.Provides
+import dagger.Module
+
+@Module
+abstract class DebugModule{
+    @Provides
+    fun logger():ILogger {
+        return ILogger { println(it)}
+    }
+}
+```
