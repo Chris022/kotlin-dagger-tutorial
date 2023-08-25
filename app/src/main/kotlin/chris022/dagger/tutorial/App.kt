@@ -3,13 +3,10 @@
  */
 package chris022.dagger.tutorial
 
-class App {
-    val greeting: String
-        get() {
-            return "Hello World!"
-        }
-}
+import chris022.dagger.tutorial.CoffeeShop
 
 fun main() {
-    println(App().greeting)
+    var coffeeShop: CoffeeShop = DaggerCoffeeShop.create();
+    var coffee = coffeeShop.brew();
+    coffee.drink();
 }
